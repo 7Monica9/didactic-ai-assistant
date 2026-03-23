@@ -7,28 +7,28 @@ import PyPDF2
 import google.generativeai as genai
 
 # ---------- Gemini Client ----------
-# 从环境变量读取 GEMINI_API_KEY
+# Read GEMINI_API_KEY from environment variables
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 if not GEMINI_API_KEY:
-    raise RuntimeError("请先在系统环境中设置 GEMINI_API_KEY。")
+    raise RuntimeError("Please set GEMINI_API_KEY in your system environment first.")
 
 genai.configure(api_key=GEMINI_API_KEY)
 
 
 def _pick_default_model() -> str:
     """
-    从当前账号可用模型里，自动挑一个支持 generateContent 的模型。
-    这样就不会因为具体模型名（比如 1.5-flash-002）在某些区域不可用而报 404。
+    Automatically pick a model that supports generateContent from the available models in the current account.
+    This prevents 404 errors due to specific model names (e.g., 1.5-flash-002) being unavailable in certain regions.
     """
     try:
         for m in genai.list_models():
             if "generateContent" in getattr(m, "supported_generation_methods", []):
                 return m.name
     except Exception:
-        # 如果列模型失败，就退回到一个通用别名
+        # If listing models fails, fall back to a generic alias
         return "gemini-2.0-flash"
 
-    # 万一没找到，最后兜底
+    # Final fallback if none are found
     return "gemini-2.0-flash"
 
 
@@ -119,10 +119,10 @@ def get_actions_and_questions(document_text: str):
         ),
     )
 
-    # Gemini 的返回有一个 text 属性
+    # Gemini response contains a text attribute
     content = response.text.strip()
 
-    # 尝试解析 JSON，防御性处理
+    # Attempt to parse JSON with defensive handling
     try:
         data = json.loads(content)
     except json.JSONDecodeError:
