@@ -1,4 +1,3 @@
-<img width="2486" height="1258" alt="Didactic AI – PDF Action Planner1" src="https://github.com/user-attachments/assets/f95645a8-c70c-470b-b801-9d90b9cc287c" /># didactic-ai-assistant
 An AI-driven prototype for automated didactic content generation. It transforms complex technical manuals into structured action steps and interactive quizzes using Gemini 1.5 Flash.
 # Didactic AI Assistant: Automated Learning Architect
 
