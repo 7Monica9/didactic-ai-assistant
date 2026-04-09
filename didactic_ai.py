@@ -6,7 +6,6 @@ import streamlit as st
 import PyPDF2
 import google.generativeai as genai
 
-# ---------- Gemini Client ----------
 # Read GEMINI_API_KEY from environment variables
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 if not GEMINI_API_KEY:
